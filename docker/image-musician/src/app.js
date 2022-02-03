@@ -7,7 +7,7 @@ const socket = dgram.createSocket('udp4');
 
 //multicast adress and port
 const MULTICAST_ADDRESS = "239.255.22.5";
-const MULTICAST_PORT = 9907;
+const MULTICAST_PORT = 33333;
 
 // map of instruments to their sound
 const instrToSound = new Map();
@@ -46,7 +46,7 @@ function play(){
 
     // Send payload as UDP datagram
     socket.send(jsonToSend, 0, jsonToSend.length, MULTICAST_PORT, MULTICAST_ADDRESS, function(err, bytes) {
-        console.log("Sending payload: " + jsonToSend + " via port " + socket.address().port);
+        console.log("Sending payload: " + jsonToSend + " via port " + MULTICAST_PORT);
     });
 }
 

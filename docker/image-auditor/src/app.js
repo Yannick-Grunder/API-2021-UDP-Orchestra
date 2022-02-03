@@ -4,7 +4,7 @@ const net = require('net');
 
 // namming the multicast ip and port as well as the TCP port
 const MULTICAST_ADDRESS = "239.255.22.5";
-const MULTICAST_PORT = 33173;
+const MULTICAST_PORT = 33333;
 
 const TCP_PORT = 2205
 
@@ -24,6 +24,10 @@ const udpSocket = dgram.createSocket('udp4');
 udpSocket.bind(MULTICAST_PORT, function() {
     console.log("Joining multicast with ip : " + MULTICAST_ADDRESS);
     udpSocket.addMembership(MULTICAST_ADDRESS);
+});
+
+udpSocket.on('error', function (err) {
+    console.log(err);
 });
 
 udpSocket.on('message', function(msg, source) {
@@ -59,6 +63,7 @@ udpSocket.on('message', function(msg, source) {
 udpSocket.on('error', function (err) {
     console.log(err);
 });
+
 // function to keep only active musicians (5 seconds since last update)
 function updateMusicians() {
     // update the timer
@@ -77,7 +82,7 @@ setInterval(() => updateMusicians(), 1000);
 var tcpServer = net.createServer(function(socket) {
     console.log("Connexion received on TCP server.")
 
-    var payload = JSON.stringify(musicians);
+    var payload = musicians;
 
     // We dont want the secondsSinceLastUpdate part
     payload.forEach(musician => delete musician.secondsSinceLastUpdate);
@@ -87,3 +92,5 @@ var tcpServer = net.createServer(function(socket) {
     socket.pipe(socket);
     socket.destroy();
 })
+
+tcpServer.listen(TCP_PORT);
