@@ -108,51 +108,51 @@ Reminder: answer the following questions [here](https://forms.gle/6SM7cu4cYhNsRv
 | Question | How can we represent the system in an **architecture diagram**, which gives information both about the Docker containers, the communication protocols and the commands? |
 |          | ![image](images/diagram.png) |
 | Question | Who is going to **send UDP datagrams** and **when**? |
-|          | All **api/musician** containers send (on a multicast) a UDP datagram every second |
+|          | All **api/musician** containers send (on a multicast) a UDP datagram every second .|
 | Question | Who is going to **listen for UDP datagrams** and what should happen when a datagram is received |
-|          | An **api/auditor** container listens to these multicasts and when it hears something it updates its data that contains who said what and when|
+|          | An **api/auditor** container listens to these multicasts and when it hears something it updates its data that contains who said what and when. |
 | Question | What **payload** should we put in the UDP datagrams? |
-|          | The **_UUID_** of an **api/musician** container and the **_sound_** played with their instrument |
+|          | The **_UUID_** of an **api/musician** container and the **_sound_** played with their instrument. |
 | Question | What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures? |
-|          | JSON data structures are used, they are sent from an **api/musician** container and once received by an **api/auditor** container they will update their own JSON containing the **_UUID_** of a **api/musician** container, the **_sound_** it made and **_when last it heard_** that specific container |
+|          | JSON data structures are used, they are sent from an **api/musician** container and once received by an **api/auditor** container they will update their own JSON containing the **_UUID_** of a **api/musician** container, the **_sound_** it made and **_when last it heard_** that specific container. |
 
 ## Task 2: implement a "musician" Node.js application
 
 | #        | Topic                                                                               |
 | -------- | ----------------------------------------------------------------------------------- |
 | Question | In a JavaScript program, if we have an object, how can we **serialize it in JSON**? |
-|          | _Enter your response here..._                                                       |
+|          | We can easily use the `JSON.stringify()` function to make a JS object into a JSON string. |
 | Question | What is **npm**?                                                                    |
-|          | _Enter your response here..._                                                       |
+|          | **N**ode **P**ackage **M**anager, it is used to install, update, and uninstall node packages. We need node packages for our app to work. |
 | Question | What is the `npm install` command and what is the purpose of the `--save` flag?     |
-|          | _Enter your response here..._                                                       |
+|          | `npm install` is the command to install a node package. Using the `--save` flag will create or update a `package.json` file with the information that the package just installed is a dependency for our program. This is really useful since node packages can be heavy, so when the `npm install` (with nothing else) command is used when a `package.json` file is present then it will install all the dependencies specified in it |
 | Question | How can we use the `https://www.npmjs.com/` web site?                               |
-|          | _Enter your response here..._                                                       |
+|          | This website is a library of all node packages that can be installed, you can search for packages using keywords for the functionality you are looking for. |
 | Question | In JavaScript, how can we **generate a UUID** compliant with RFC4122?               |
-|          | _Enter your response here..._                                                       |
+|          | by looking up `UUID` on `https://www.npmjs.com/` we find a package with that exact name that is compliant with RFC4122 (`https://www.npmjs.com/package/uuid`) |
 | Question | In Node.js, how can we execute a function on a **periodic** basis?                  |
-|          | _Enter your response here..._                                                       |
+|          | There is a function called `setIntervall` you can use to call a function at a regular interval (in milliseconds). It is used like this : `setInterval(() => yourFunc([eventual arguments]), [intervall in milliseconds]);` |
 | Question | In Node.js, how can we **emit UDP datagrams**?                                      |
-|          | _Enter your response here..._                                                       |
+|          | Using the `dgram` node package (`https://nodejs.org/api/dgram.html`) witch gives access to functions in order to open a UDP socket and send UDP datagrams |
 | Question | In Node.js, how can we **access the command line arguments**?                       |
-|          | _Enter your response here..._                                                       |
+|          | The `process` object gives us access to the arguments using `process-argv[i]` i being the index to the argument you want. |
 
 ## Task 3: package the "musician" app in a Docker image
 
 | #        | Topic                                                                               |
 | -------- | ----------------------------------------------------------------------------------- |
 | Question | How do we **define and build our own Docker image**?                                |
-|          | _Enter your response here..._                                                       |
+|          | You must use the following command :  `docker build -t [IMAGE NAME] [PATH TO DOCKERFILE]`, the -t flag is used to define an image |
 | Question | How can we use the `ENTRYPOINT` statement in our Dockerfile?                        |
-|          | _Enter your response here..._                                                       |
+|          | It is generally used like this : `ENTRYPOINT [“executable”, “param1”, “param2”, ..]` in order to execute what we want at the start of the docker container. I use it like this : `ENTRYPOINT ["node", "/opt/app/app.js"]` to execute my app at the start. |
 | Question | After building our Docker image, how do we use it to **run containers**?            |
-|          | _Enter your response here..._                                                       |
+|          | You need to use the following command : `docker run -d {--name [OPTIONAL NAME]} api/musician [NAME OF IT'S INSTRUMENT]`, the last argument will be given to the js app so that it knows what sound to make |
 | Question | How do we get the list of all **running containers**?                               |
-|          | _Enter your response here..._                                                       |
+|          | Simply run `docker ps` |
 | Question | How do we **stop/kill** one running container?                                      |
-|          | _Enter your response here..._                                                       |
+|          | Simply run `docker kill [CONTAINER NAME]` |
 | Question | How can we check that our running containers are effectively sending UDP datagrams? |
-|          | _Enter your response here..._                                                       |
+|          | You could run it in the foreground (not using the `-d` flag) witch would give you the consol logs that the app does, you could also use the `docker logs` command to get it's logs. You could also simply run an `api/auditor` container and  |
 
 ## Task 4: implement an "auditor" Node.js application
 

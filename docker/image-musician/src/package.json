@@ -1,0 +1,16 @@
+{
+    "name": "musician",
+    "version": "1.0",
+    "description": "Plays a sond every second depending on the isntrument given as an argument",
+    "main": "app.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Alice Grunder",
+    "license": "ISC",
+    "dependencies": {
+        "dgram": "^1.0.1",
+        "uuid": "^8.3.2"
+      }
+  }
+  
