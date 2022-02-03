@@ -129,7 +129,7 @@ Reminder: answer the following questions [here](https://forms.gle/6SM7cu4cYhNsRv
 | Question | How can we use the `https://www.npmjs.com/` web site?                               |
 |          | This website is a library of all node packages that can be installed, you can search for packages using keywords for the functionality you are looking for. |
 | Question | In JavaScript, how can we **generate a UUID** compliant with RFC4122?               |
-|          | by looking up `UUID` on `https://www.npmjs.com/` we find a package with that exact name that is compliant with RFC4122 (`https://www.npmjs.com/package/uuid`) |
+|          | By looking up `UUID` on `https://www.npmjs.com/` we find a package with that exact name that is compliant with RFC4122 (`https://www.npmjs.com/package/uuid`) |
 | Question | In Node.js, how can we execute a function on a **periodic** basis?                  |
 |          | There is a function called `setIntervall` you can use to call a function at a regular interval (in milliseconds). It is used like this : `setInterval(() => yourFunc([eventual arguments]), [intervall in milliseconds]);` |
 | Question | In Node.js, how can we **emit UDP datagrams**?                                      |
@@ -146,7 +146,7 @@ Reminder: answer the following questions [here](https://forms.gle/6SM7cu4cYhNsRv
 | Question | How can we use the `ENTRYPOINT` statement in our Dockerfile?                        |
 |          | It is generally used like this : `ENTRYPOINT [“executable”, “param1”, “param2”, ..]` in order to execute what we want at the start of the docker container. I use it like this : `ENTRYPOINT ["node", "/opt/app/app.js"]` to execute my app at the start. |
 | Question | After building our Docker image, how do we use it to **run containers**?            |
-|          | You need to use the following command : `docker run -d {--name [OPTIONAL NAME]} api/musician [NAME OF IT'S INSTRUMENT]`, the last argument will be given to the js app so that it knows what sound to make |
+|          | You need to use the following command : `docker run -d {--name [OPTIONAL NAME]} api/musician [NAME OF IT'S INSTRUMENT]`, the last argument will be given to the JS app so that it knows what sound to make |
 | Question | How do we get the list of all **running containers**?                               |
 |          | Simply run `docker ps` |
 | Question | How do we **stop/kill** one running container?                                      |
@@ -159,22 +159,22 @@ Reminder: answer the following questions [here](https://forms.gle/6SM7cu4cYhNsRv
 | #        | Topic                                                                                              |
 | -------- | -------------------------------------------------------------------------------------------------- |
 | Question | With Node.js, how can we listen for UDP datagrams in a multicast group?                            |
-|          | _Enter your response here..._                                                                      |
+|          | Using the `dgram` package we can bind a socket to the port (`socket.bind(port, function)`) and the add a membership to a multicast address (`addMemebership(multicast_address)`) |
 | Question | How can we use the `Map` built-in object introduced in ECMAScript 6 to implement a **dictionary**? |
-|          | _Enter your response here..._                                                                      |
+|          | A `Map` object lists **_`key-value`_** pairs where the key can be anything (most noticeably it can be a string). Using the `get()` function of `Maps` we can find the value with the key. |
 | Question | How can we use the `Moment.js` npm module to help us with **date manipulations** and formatting?   |
-|          | _Enter your response here..._                                                                      |
+|          | It needs to be installed by adding it to our `package.json` (add the line `"moment": "^2.29.1"` to your dependencies at the bottom). You also need to add it to your JS app using `const moment = require('moment')`, this gives us a array of useful functions in relation to time and time difference. I ended up not using it in favour of a simpler design. |
 | Question | When and how do we **get rid of inactive players**?                                                |
-|          | _Enter your response here..._                                                                      |
+|          | Every second i increase a conter on all musicians stored, if this counter goes over 5 I delete them making it a 6 second interval between the last sound a musician did and their deletion from an auditor's list |
 | Question | How do I implement a **simple TCP server** in Node.js?                                             |
-|          | _Enter your response here..._                                                                      |
+|          | Using the `net` node package witch has an array of functions for exactly this |
 
 ## Task 5: package the "auditor" app in a Docker image
 
 | #        | Topic                                                                                |
 | -------- | ------------------------------------------------------------------------------------ |
 | Question | How do we validate that the whole system works, once we have built our Docker image? |
-|          | _Enter your response here..._                                                        |
+|          | Using the `validate.sh` file given and by running it on our own |
 
 ## Constraints
 

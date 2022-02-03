@@ -5,7 +5,8 @@ const { v4: uuidv4 } = require('uuid');
 //socket 
 const socket = dgram.createSocket('udp4');
 
-const MULTICAST_ADDRESS = "235.255.22.5";
+//multicast adress and port
+const MULTICAST_ADDRESS = "239.255.22.5";
 const MULTICAST_PORT = 9907;
 
 // map of instruments to their sound
@@ -20,13 +21,13 @@ instrToSound.set("drum", "boum-boum");
 const instrument = process.argv[2];
 
 //make sure the instrument received is valid
-if(!(instrument in instrToSound)){
+if(!(instrToSound.has(instrument))){
     console.log("Invalid instrument");
     process.exit(1);
 }
 
 // get the right sound for the instrument
-const sound = instrToSound[instrument];
+const sound = instrToSound.get(instrument);
 
 // make a uuid
 const UUID = uuidv4();
@@ -43,13 +44,9 @@ function play(){
     //makes the data object into a json
     const jsonToSend = JSON.stringify(dataObject)
 
-    //makes the json into a sendable buffer
-    const payload = new Buffer(jsonToSend)
-    
-
     // Send payload as UDP datagram
-    s.send(payload, 0, payload.length, MULTICAST_ADDRESS, MULTICAST_PORT, function(err, bytes) {
-        console.log("Sending payload: " + payload + " via port " + s.address().port);
+    socket.send(jsonToSend, 0, jsonToSend.length, MULTICAST_PORT, MULTICAST_ADDRESS, function(err, bytes) {
+        console.log("Sending payload: " + jsonToSend + " via port " + socket.address().port);
     });
 }
 
